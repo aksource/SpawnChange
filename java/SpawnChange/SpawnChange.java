@@ -18,7 +18,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid="SpawnChange", name="SpawnChange", version="1.7srg-1",dependencies="required-after:FML")
+@Mod(modid="SpawnChange", name="SpawnChange", version="1.7srg-1",dependencies="required-after:FML", useMetadata = true)
 //@NetworkMod(clientSideRequired=true, serverSideRequired=false)
 public class SpawnChange
 {
