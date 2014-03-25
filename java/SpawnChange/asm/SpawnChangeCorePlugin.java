@@ -5,6 +5,7 @@ import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by A.K. on 14/03/22.
@@ -13,7 +14,7 @@ public class SpawnChangeCorePlugin implements IFMLLoadingPlugin{
     public static boolean portalSpawn;
     public static int netherSpawnLightValue;
     public static int SlimeSpawnHeight;
-
+    public static Logger logger = Logger.getLogger("SpawnChange");
     @Override
     public String[] getASMTransformerClass() {
         return new String[]{

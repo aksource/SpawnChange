@@ -19,11 +19,11 @@ public class EntityNetherMobTransformer implements IClassTransformer, Opcodes{
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
         if (!FMLLaunchHandler.side().isClient() || !TARGET_CLASS_NAMES.contains(transformedName)) {return basicClass;}
         try {
-            System.out.println("Start " + transformedName + " transform");
+            SpawnChangeCorePlugin.logger.info("Start " + transformedName + " transform");
             ClassReader classReader = new ClassReader(basicClass);
             ClassWriter classWriter = new ClassWriter(1);
             classReader.accept(new CustomVisitor(name,classWriter), 8);
-            System.out.println("Finish " + transformedName + " transform");
+            SpawnChangeCorePlugin.logger.info("Finish " + transformedName + " transform");
             return classWriter.toByteArray();
         } catch (Exception e) {
             throw new RuntimeException("failed : BlockCactusTransformer loading", e);
