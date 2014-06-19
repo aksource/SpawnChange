@@ -17,7 +17,7 @@ public class SpawnChangeCoreModContainer extends DummyModContainer{
         ModMetadata meta = getMetadata();
         meta.modId = "SpawnChangeCore";
         meta.name = "SpawnChangeCore";
-        meta.version = "1.0.0";
+        meta.version = "@VERSION@";
         meta.authorList = Arrays.asList("takanasayo", "A.K.");
         meta.description = "Change some mobs spawn condition";
         meta.url = "";
