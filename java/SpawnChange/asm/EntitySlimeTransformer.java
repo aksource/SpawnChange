@@ -21,7 +21,7 @@ public class EntitySlimeTransformer implements IClassTransformer, Opcodes{
             SpawnChangeCorePlugin.logger.info("Finish " + TARGET_CLASS_NAME + " transform");
             return classWriter.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("failed : BlockCactusTransformer loading", e);
+            throw new RuntimeException("failed : EntitySlimeTransformer loading", e);
         }
     }
 

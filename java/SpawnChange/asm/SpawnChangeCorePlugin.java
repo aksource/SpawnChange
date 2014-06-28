@@ -20,7 +20,7 @@ public class SpawnChangeCorePlugin implements IFMLLoadingPlugin{
         return new String[]{
                 "SpawnChange.asm.EntitySlimeTransformer",
                 "SpawnChange.asm.EntityNetherMobTransformer",
-                "SpawnChange.asm.BlockObsidenTransformer"
+                "SpawnChange.asm.BlockObsidianTransformer"
         };
     }
 

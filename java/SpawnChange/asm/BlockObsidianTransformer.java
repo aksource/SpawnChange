@@ -8,7 +8,7 @@ import org.objectweb.asm.*;
 /**
  * Created by A.K. on 14/03/22.
  */
-public class BlockObsidenTransformer implements IClassTransformer, Opcodes{
+public class BlockObsidianTransformer implements IClassTransformer, Opcodes{
     private static final String TARGET_CLASS_NAME = "net.minecraft.block.BlockObsidian";
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
@@ -21,7 +21,7 @@ public class BlockObsidenTransformer implements IClassTransformer, Opcodes{
             SpawnChangeCorePlugin.logger.info("Finish " + TARGET_CLASS_NAME + " transform");
             return classWriter.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("failed : BlockCactusTransformer loading", e);
+            throw new RuntimeException("failed : BlockObsidenTransformer loading", e);
         }
     }
 

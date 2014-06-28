@@ -26,7 +26,7 @@ public class EntityNetherMobTransformer implements IClassTransformer, Opcodes{
             SpawnChangeCorePlugin.logger.info("Finish " + transformedName + " transform");
             return classWriter.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("failed : BlockCactusTransformer loading", e);
+            throw new RuntimeException("failed : EntityNetherMobTransformer loading", e);
         }
     }
     public static boolean isValidLightLevel(EntityLiving entityLiving)
