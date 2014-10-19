@@ -17,11 +17,11 @@ public class SpawnChangeCorePlugin implements IFMLLoadingPlugin{
     public static Logger logger = Logger.getLogger("SpawnChange");
     @Override
     public String[] getASMTransformerClass() {
-        return new String[]{
+        return null/*new String[]{
                 "SpawnChange.asm.EntitySlimeTransformer",
                 "SpawnChange.asm.EntityNetherMobTransformer",
                 "SpawnChange.asm.BlockObsidianTransformer"
-        };
+        }*/;
     }
 
     @Override
