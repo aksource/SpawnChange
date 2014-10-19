@@ -46,7 +46,11 @@ public class SpawnCheckHook {
         for (String str : strs) {
             split = str.split(":");
             if (split.length > 1 && isValidString(split[1])) {
-                map.put(split[0], getBiomes(split[1]));
+                if (map.containsKey(split[0])) {
+                    map.get(split[1]).addAll(getBiomes(split[1]));
+                } else {
+                    map.put(split[0], getBiomes(split[1]));
+                }
             }
         }
     }
