@@ -2,13 +2,13 @@ package SpawnChange;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import cpw.mods.fml.common.eventhandler.Event;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Map;
 import java.util.Set;
@@ -101,7 +101,8 @@ public class SpawnCheckHook {
     public void spawnCheck(LivingSpawnEvent.CheckSpawn event) {
         EntityLivingBase entityLiving = event.entityLiving;
         String entityName = EntityList.getEntityString(entityLiving);
-        BiomeGenBase biome = event.world.getBiomeGenForCoords(MathHelper.ceiling_float_int(event.x), MathHelper.ceiling_float_int(event.z));
+        BlockPos blockPos = new BlockPos(event.x, event.y, event.z);
+        BiomeGenBase biome = event.world.getBiomeGenForCoords(blockPos);
         if (entitySpawnBiomesMap.containsKey(entityName)) {
             if (!entitySpawnBiomesMap.get(entityName).contains(biome)) {
                 event.setResult(Event.Result.DENY);
@@ -116,7 +117,7 @@ public class SpawnCheckHook {
             }
         }
 
-        int lightValue = event.world.getBlockLightValue(MathHelper.ceiling_float_int(event.x), MathHelper.ceiling_float_int(event.y), MathHelper.ceiling_float_int(event.z));
+        int lightValue = event.world.getLight(blockPos);
         if (entitySpawnLightMap.containsKey(entityName)) {
             if (entitySpawnLightMap.get(entityName) < lightValue) {
                 event.setResult(Event.Result.DENY);
