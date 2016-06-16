@@ -9,10 +9,19 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 /**
  * Created by A.K. on 14/10/18.
  */
-@Mod(modid="SpawnChange", name="SpawnChange", version="@VERSION@",dependencies="required-after:FML", useMetadata = true)
+@Mod(modid = SpawnChange.MOD_ID,
+        name = SpawnChange.MOD_NAME,
+        version = SpawnChange.MOD_VERSION,
+        dependencies = SpawnChange.MOD_DEPENDENCIES,
+        useMetadata = true,
+        acceptedMinecraftVersions = SpawnChange.MOD_MC_VERSION)
 public class SpawnChange {
-    @Mod.Instance("SpawnChange")
-    public static SpawnChange instance;
+
+    public static final String MOD_ID = "SpawnChange";
+    public static final String MOD_NAME = "SpawnChange";
+    public static final String MOD_VERSION = "@VERSION@";
+    public static final String MOD_DEPENDENCIES = "required-after:Forge@[11.14.0.1237,)";
+    public static final String MOD_MC_VERSION = "[1.8,1.8.9]";
     public static String[] entitySpawnHeightConfig = new String[] {
             "Slime:16"
     };
