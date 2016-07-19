@@ -1,28 +1,37 @@
 package SpawnChange;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
  * Created by A.K. on 14/10/18.
  */
-@Mod(modid="SpawnChange", name="SpawnChange", version="@VERSION@",dependencies="required-after:FML", useMetadata = true)
+@Mod(modid = SpawnChange.MOD_ID,
+        name = SpawnChange.MOD_NAME,
+        version = SpawnChange.MOD_VERSION,
+        dependencies = SpawnChange.MOD_DEPENDENCIES,
+        useMetadata = true,
+        acceptedMinecraftVersions = SpawnChange.MOD_MC_VERSION)
 public class SpawnChange {
-    @Mod.Instance("SpawnChange")
-    public static SpawnChange instance;
-    public static String[] entitySpawnHeightConfig = new String[] {
+
+    public static final String MOD_ID = "SpawnChange";
+    public static final String MOD_NAME = "SpawnChange";
+    public static final String MOD_VERSION = "@VERSION@";
+    public static final String MOD_DEPENDENCIES = "required-after:Forge@[12.17.0,)";
+    public static final String MOD_MC_VERSION = "[1.9,1.10.99]";
+    static String[] entitySpawnHeightConfig = new String[] {
             "Slime:16"
     };
-    public static String[] entitySpawnLightConfig = new String[] {
+    static String[] entitySpawnLightConfig = new String[] {
             "PigZombie:7",
             "Ghast:7",
             "Blaze:7",
             "LavaSlime:7"
     };
-    public static String[] entitySpawnBiomeConfig = new String[]{
+    static String[] entitySpawnBiomeConfig = new String[]{
             "PigZombie:Hell"
     };
 

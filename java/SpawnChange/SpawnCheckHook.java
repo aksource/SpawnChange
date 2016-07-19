@@ -2,27 +2,30 @@ package SpawnChange;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import cpw.mods.fml.common.eventhandler.Event;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Map;
 import java.util.Set;
 
 /**
+ * モブのスポーンを調整するクラス
  * Created by A.K. on 14/10/18.
  */
 public class SpawnCheckHook {
+    private static final int BIOME_ID_HELL = 8;
+    private static final int BIOME_ID_SKY = 9;
     public static Map<String, Integer> entitySpawnHightMap = Maps.newHashMap();
     public static Map<String, Integer> entitySpawnLightMap = Maps.newHashMap();
-    public static Map<String, Set<BiomeGenBase>> entitySpawnBiomesMap = Maps.newHashMap();
+    public static Map<String, Set<Biome>> entitySpawnBiomesMap = Maps.newHashMap();
     private static Set<String> biomeExtraWordsSet = Sets.newHashSet();
-    private static Set<BiomeGenBase> vanillaBiomeSet = Sets.newHashSet();
-    private static Set<BiomeGenBase> overworldBiomeSet = Sets.newHashSet();
+    private static Set<Biome> vanillaBiomeSet = Sets.newHashSet();
+    private static Set<Biome> overworldBiomeSet = Sets.newHashSet();
 
     public static void init() {
         generateVanillaBiomeSet();
@@ -41,7 +44,7 @@ public class SpawnCheckHook {
         }
     }
 
-    private static void addBiomeMap(Map<String, Set<BiomeGenBase>> map, String[] strs) {
+    private static void addBiomeMap(Map<String, Set<Biome>> map, String[] strs) {
         String[] split;
         for (String str : strs) {
             split = str.split(":");
@@ -56,14 +59,14 @@ public class SpawnCheckHook {
     }
 
     private static void generateVanillaBiomeSet() {
-        for (BiomeGenBase biomeGenBase : BiomeGenBase.getBiomeGenArray()) {
-            if (biomeGenBase != null) {
-                vanillaBiomeSet.add(biomeGenBase);
+        for (Biome biome : Biome.REGISTRY) {
+            if (biome != null) {
+                vanillaBiomeSet.add(biome);
             }
         }
         overworldBiomeSet.addAll(vanillaBiomeSet);
-        overworldBiomeSet.remove(BiomeGenBase.hell);
-        overworldBiomeSet.remove(BiomeGenBase.sky);
+        overworldBiomeSet.remove(Biome.getBiome(BIOME_ID_HELL));
+        overworldBiomeSet.remove(Biome.getBiome(BIOME_ID_SKY));
     }
 
     private static boolean isValidString(String string) {
@@ -71,15 +74,16 @@ public class SpawnCheckHook {
     }
 
     private static boolean isBiomeName(String str) {
-        for (BiomeGenBase biomeGenBase : BiomeGenBase.getBiomeGenArray()) {
-            if (biomeGenBase != null && biomeGenBase.biomeName.equals(str)) {
+
+        for (Biome biome : Biome.REGISTRY) {
+            if (biome.getBiomeName().equals(str)) {
                 return true;
             }
         }
         return false;
     }
 
-    private static Set<BiomeGenBase> getBiomes(String str) {
+    private static Set<Biome> getBiomes(String str) {
         if (str.equals("OVERWORLD")) {
             return overworldBiomeSet;
         }
@@ -87,10 +91,10 @@ public class SpawnCheckHook {
         if (str.equals("VANILLA")) {
             return vanillaBiomeSet;
         }
-        Set<BiomeGenBase> biomeSet = Sets.newHashSet();
-        for (BiomeGenBase biomeGenBase : BiomeGenBase.getBiomeGenArray()) {
-            if (biomeGenBase != null && biomeGenBase.biomeName.equals(str)) {
-                biomeSet.add(biomeGenBase);
+        Set<Biome> biomeSet = Sets.newHashSet();
+        for (Biome biome : Biome.REGISTRY) {
+            if (biome != null && biome.getBiomeName().equals(str)) {
+                biomeSet.add(biome);
             }
         }
         return biomeSet;
@@ -99,9 +103,10 @@ public class SpawnCheckHook {
 
     @SubscribeEvent
     public void spawnCheck(LivingSpawnEvent.CheckSpawn event) {
-        EntityLivingBase entityLiving = event.entityLiving;
+        EntityLivingBase entityLiving = event.getEntityLiving();
         String entityName = EntityList.getEntityString(entityLiving);
-        BiomeGenBase biome = event.world.getBiomeGenForCoords(MathHelper.ceiling_float_int(event.x), MathHelper.ceiling_float_int(event.z));
+        BlockPos blockPos = new BlockPos(event.getX(), event.getY(), event.getZ());
+        Biome biome = event.getWorld().getBiomeGenForCoords(blockPos);
         if (entitySpawnBiomesMap.containsKey(entityName)) {
             if (!entitySpawnBiomesMap.get(entityName).contains(biome)) {
                 event.setResult(Event.Result.DENY);
@@ -110,13 +115,13 @@ public class SpawnCheckHook {
         }
 
         if (entitySpawnHightMap.containsKey(entityName)) {
-            if (entitySpawnHightMap.get(entityName) < event.y) {
+            if (entitySpawnHightMap.get(entityName) < event.getY()) {
                 event.setResult(Event.Result.DENY);
                 return;
             }
         }
 
-        int lightValue = event.world.getBlockLightValue(MathHelper.ceiling_float_int(event.x), MathHelper.ceiling_float_int(event.y), MathHelper.ceiling_float_int(event.z));
+        int lightValue = event.getWorld().getLight(blockPos);
         if (entitySpawnLightMap.containsKey(entityName)) {
             if (entitySpawnLightMap.get(entityName) < lightValue) {
                 event.setResult(Event.Result.DENY);
