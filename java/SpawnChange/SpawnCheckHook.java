@@ -38,8 +38,8 @@ public class SpawnCheckHook {
         String[] split;
         for (String str : strs) {
             split = str.split(":");
-            if (split.length > 1 && Integer.getInteger(split[1], 0) > 0) {
-                map.put(split[0], Integer.getInteger(split[1]));
+            if (split.length > 1 && Integer.parseInt(split[1]) > 0) {
+                map.put(split[0], Integer.parseInt(split[1]));
             }
         }
     }
