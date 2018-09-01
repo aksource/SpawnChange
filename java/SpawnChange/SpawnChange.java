@@ -41,11 +41,11 @@ public class SpawnChange {
                 event.getSuggestedConfigurationFile());
         config.load();
         entitySpawnHeightConfig = config.get(Configuration.CATEGORY_GENERAL, "entitySpawnHeightConfig", entitySpawnHeightConfig,
-                "Mob Spawn Height Configuration. ex:MOB_NAME:SPAWNABLE_HEIGHT").getDefaults();
+                "Mob Spawn Height Configuration. ex:MOB_NAME:SPAWNABLE_HEIGHT").getStringList();
         entitySpawnLightConfig = config.get(Configuration.CATEGORY_GENERAL, "entitySpawnLightConfig", entitySpawnLightConfig,
-                "Mob Spawn Light Configuration. ex:MOB_NAME:SPAWNABLE_LIGHT_VALUE").getDefaults();
+                "Mob Spawn Light Configuration. ex:MOB_NAME:SPAWNABLE_LIGHT_VALUE").getStringList();
         entitySpawnBiomeConfig = config.get(Configuration.CATEGORY_GENERAL, "entitySpawnBiomeConfig", entitySpawnBiomeConfig,
-                "Mob Spawn Biomes Configuration. ex:MOB_NAME:SPAWNABLE_BIOMES. Extra words are available:OVERWORLD, VANILLA").getDefaults();
+                "Mob Spawn Biomes Configuration. ex:MOB_NAME:SPAWNABLE_BIOMES. Extra words are available:OVERWORLD, VANILLA").getStringList();
         config.save();
         SpawnCheckHook.init();
     }
