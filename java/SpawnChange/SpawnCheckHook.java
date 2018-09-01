@@ -35,7 +35,7 @@ public class SpawnCheckHook {
         String[] split;
         for (String str : strs) {
             split = str.split(":");
-            if (split.length > 1 && Integer.parseInt(split[1]) > 0) {
+            if (split.length > 1) {
                 map.put(split[0], Integer.parseInt(split[1]));
             }
         }
@@ -118,7 +118,7 @@ public class SpawnCheckHook {
 
         int lightValue = event.world.getBlockLightValue(MathHelper.ceiling_float_int(event.x), MathHelper.ceiling_float_int(event.y), MathHelper.ceiling_float_int(event.z));
         if (entitySpawnLightMap.containsKey(entityName)) {
-            if (entitySpawnLightMap.get(entityName) < lightValue) {
+            if (entitySpawnLightMap.get(entityName) <= lightValue) {
                 event.setResult(Event.Result.DENY);
             }
         }
